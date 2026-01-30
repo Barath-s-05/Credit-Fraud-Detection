@@ -1,6 +1,6 @@
 # AI Credit Card Fraud Detection System
 
-A modern full-stack application for detecting credit card fraud using machine learning, featuring a React frontend with real-time analytics and a FastAPI backend.
+A modern full-stack application for detecting credit card fraud using machine learning. Features a React frontend with real-time analytics, a FastAPI backend with ML model integration, and a Streamlit dashboard for data visualization.
 
 ## 🏗️ Project Structure
 
@@ -41,9 +41,9 @@ pip install -r requirements.txt
 
 3. Start the backend server:
 ```bash
-uvicorn main:app --reload
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
-Backend will run on `http://127.0.0.1:8000`
+Backend will run on `http://127.0.0.1:8000` or `http://localhost:8000`
 
 ### Frontend Setup
 
@@ -80,6 +80,15 @@ pip install streamlit plotly pandas scikit-learn matplotlib seaborn numpy
 streamlit run dashboard.py
 ```
 
+## 🔧 Backend Details
+
+The backend is built with FastAPI and includes:
+- Real-time fraud prediction API
+- Cross-origin resource sharing (CORS) enabled
+- Pydantic data validation
+- Confidence scoring for predictions
+- ML model loading and inference
+
 ## 📋 API Endpoints
 
 ### GET /
@@ -110,37 +119,59 @@ streamlit run dashboard.py
 
 ### Frontend
 - Modern glassmorphism UI with dark theme
-- Real-time fraud prediction
+- Real-time fraud prediction interface
 - Interactive analytics dashboard
 - Feature importance visualization
 - Responsive design for all devices
+- Framer Motion animations
+- Material UI components
 
 ### Backend
-- FastAPI with Pydantic validation
+- FastAPI REST API framework
+- Pydantic data validation
 - Cross-origin resource sharing (CORS)
-- ML model integration
-- Confidence scoring
+- ML model integration with joblib
+- Real-time prediction with confidence scoring
+- Uvicorn ASGI server
 
 ### Dashboard
-- Data visualization
+- Streamlit data visualization
 - Model performance metrics
-- Feature analysis
+- Feature analysis and correlation
 - Fraud distribution charts
+- Interactive plots with Plotly
 
 ## 🤖 Model Information
 
-- Algorithm: Random Forest Classifier
-- Features: 30 (Amount, Time, V1-V28)
-- Training Data: Credit card transactions
-- Output: Binary classification (Fraud/Normal)
+- **Algorithm**: Random Forest Classifier
+- **Features**: 30 features (Amount, Time, V1-V28 PCA components)
+- **Training Data**: Credit card transactions dataset
+- **Output**: Binary classification (Fraud/Normal)
+- **Model Format**: Pickle (.pkl) files
+- **Preprocessing**: StandardScaler normalization
 
 ## 🔧 Technologies Used
 
-- **Backend**: FastAPI, Uvicorn, Joblib
-- **Frontend**: React, Material UI, Framer Motion, Recharts
-- **ML**: Scikit-learn, Pandas, NumPy
-- **Visualization**: Plotly, Matplotlib
-- **Deployment**: Compatible with Docker
+### Backend Stack
+- **Framework**: FastAPI
+- **Server**: Uvicorn (ASGI)
+- **ML Integration**: Joblib, Scikit-learn
+- **Data Processing**: Pandas, NumPy
+
+### Frontend Stack
+- **Framework**: React
+- **UI Library**: Material UI
+- **Animations**: Framer Motion
+- **Charts**: Recharts
+- **Styling**: CSS3 with glassmorphism effects
+
+### Dashboard Stack
+- **Framework**: Streamlit
+- **Visualization**: Plotly, Matplotlib, Seaborn
+
+### Deployment
+- **Containerization**: Docker ready
+- **Environment**: Cross-platform compatible
 
 ## 📊 Analytics Dashboard
 
