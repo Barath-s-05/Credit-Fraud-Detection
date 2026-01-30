@@ -1,0 +1,164 @@
+# AI Credit Card Fraud Detection System
+
+A modern full-stack application for detecting credit card fraud using machine learning, featuring a React frontend with real-time analytics and a FastAPI backend.
+
+## 🏗️ Project Structure
+
+```
+Credit/
+├── backend/              # FastAPI server
+│   ├── main.py           # API endpoints
+│   └── requirements.txt  # Dependencies
+├── frontend/             # React application
+│   ├── public/
+│   ├── src/
+│   │   ├── App.js        # Main application
+│   │   └── index.js
+│   └── package.json
+├── dashboard/            # Streamlit analytics
+│   └── dashboard.py
+├── model_training/       # Pre-trained model
+│   ├── fraud_model.py
+│   ├── model.pkl
+│   └── scaler.pkl
+└── data/                 # Dataset
+    └── creditcard.csv
+```
+
+## 🚀 Quick Start
+
+### Backend Setup
+
+1. Navigate to backend directory:
+```bash
+cd backend
+```
+
+2. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+3. Start the backend server:
+```bash
+uvicorn main:app --reload
+```
+Backend will run on `http://127.0.0.1:8000`
+
+### Frontend Setup
+
+1. Navigate to frontend directory:
+```bash
+cd frontend
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start the development server:
+```bash
+npm start
+```
+Frontend will run on `http://localhost:3000`
+
+### Streamlit Dashboard
+
+1. Navigate to dashboard directory:
+```bash
+cd dashboard
+```
+
+2. Install Streamlit:
+```bash
+pip install streamlit plotly pandas scikit-learn matplotlib seaborn numpy
+```
+
+3. Run the dashboard:
+```bash
+streamlit run dashboard.py
+```
+
+## 📋 API Endpoints
+
+### GET /
+- Status check endpoint
+- Returns: `{"status": "Fraud Detection API Running"}`
+
+### POST /predict
+- Fraud prediction endpoint
+- Request body:
+```json
+{
+  "amount": 100.50,
+  "time": 3600,
+  "V1": 0.0,
+  "V2": 0.0,
+  // ... V3-V28 (optional, defaults to 0)
+}
+```
+- Response:
+```json
+{
+  "prediction": "Legitimate" | "Fraud",
+  "confidence": 95.2
+}
+```
+
+## 🎨 Features
+
+### Frontend
+- Modern glassmorphism UI with dark theme
+- Real-time fraud prediction
+- Interactive analytics dashboard
+- Feature importance visualization
+- Responsive design for all devices
+
+### Backend
+- FastAPI with Pydantic validation
+- Cross-origin resource sharing (CORS)
+- ML model integration
+- Confidence scoring
+
+### Dashboard
+- Data visualization
+- Model performance metrics
+- Feature analysis
+- Fraud distribution charts
+
+## 🤖 Model Information
+
+- Algorithm: Random Forest Classifier
+- Features: 30 (Amount, Time, V1-V28)
+- Training Data: Credit card transactions
+- Output: Binary classification (Fraud/Normal)
+
+## 🔧 Technologies Used
+
+- **Backend**: FastAPI, Uvicorn, Joblib
+- **Frontend**: React, Material UI, Framer Motion, Recharts
+- **ML**: Scikit-learn, Pandas, NumPy
+- **Visualization**: Plotly, Matplotlib
+- **Deployment**: Compatible with Docker
+
+## 📊 Analytics Dashboard
+
+The Streamlit dashboard provides:
+- Dataset overview and statistics
+- Fraud vs normal transaction analysis
+- Feature importance visualization
+- Model performance metrics
+- Correlation heatmaps
+
+## 🚀 Production Deployment
+
+For production deployment:
+1. Use a WSGI server like Gunicorn for backend
+2. Build the React app with `npm run build`
+3. Set up reverse proxy with Nginx
+4. Configure environment variables for security
+
+## 📄 License
+
+This project is open-source and available under the MIT License.
