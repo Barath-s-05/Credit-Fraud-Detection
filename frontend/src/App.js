@@ -1,9 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import { Link as ScrollLink } from 'react-scroll';
 import {
-  PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend
+  PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip
 } from 'recharts';
 
 function App() {
@@ -24,50 +24,60 @@ function App() {
 
   // Fetch data insights on component mount
   useEffect(() => {
+    let isMounted = true;
+    
     const fetchDataInsights = async () => {
       try {
         const response = await axios.get('http://127.0.0.1:8000/data-insights');
-        setDataInsights(response.data);
+        if (isMounted) {
+          setDataInsights(response.data);
+        }
       } catch (err) {
         console.error('Failed to fetch data insights:', err);
       } finally {
-        setInsightsLoading(false);
+        if (isMounted) {
+          setInsightsLoading(false);
+        }
       }
     };
     
     fetchDataInsights();
+    
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  // Floating animation for background elements
-  const floatingAnimation = {
-    y: [0, -20, 0],
-    transition: {
-      duration: 8,
-      repeat: Infinity,
-      ease: "easeInOut"
-    }
-  };
+// Floating animations are defined but not currently used
+  // const floatingAnimation = {
+  //   y: [0, -20, 0],
+  //   transition: {
+  //     duration: 8,
+  //     repeat: Infinity,
+  //     ease: "easeInOut"
+  //   }
+  // };
 
-  const floatingAnimation2 = {
-    y: [0, 15, 0],
-    x: [0, 10, 0],
-    transition: {
-      duration: 6,
-      repeat: Infinity,
-      ease: "easeInOut",
-      delay: 1
-    }
-  };
+  // const floatingAnimation2 = {
+  //   y: [0, 15, 0],
+  //   x: [0, 10, 0],
+  //   transition: {
+  //     duration: 6,
+  //     repeat: Infinity,
+  //     ease: "easeInOut",
+  //     delay: 1
+  //   }
+  // };
 
-  const floatingAnimation3 = {
-    rotate: [0, 5, -5, 0],
-    transition: {
-      duration: 10,
-      repeat: Infinity,
-      ease: "easeInOut",
-      delay: 2
-    }
-  };
+  // const floatingAnimation3 = {
+  //   rotate: [0, 5, -5, 0],
+  //   transition: {
+  //     duration: 10,
+  //     repeat: Infinity,
+  //     ease: "easeInOut",
+  //     delay: 2
+  //   }
+  // };
 
   // Continuous floating particles
   const particleAnimation = {
@@ -138,13 +148,14 @@ function App() {
     { confidence: '<60%', count: 12 }
   ];
 
-  const featureImportanceData = [
-    { name: 'Transaction Amount', value: 0.23, description: 'High-value transactions often indicate fraud patterns' },
-    { name: 'Time Since Last', value: 0.19, description: 'Unusual timing patterns suggest fraudulent activity' },
-    { name: 'Merchant Type', value: 0.15, description: 'Certain merchant categories have higher fraud rates' },
-    { name: 'Location Anomaly', value: 0.12, description: 'Transactions from unusual locations flag fraud' },
-    { name: 'Velocity Check', value: 0.08, description: 'Rapid successive transactions indicate bot activity' }
-  ];
+// Feature importance data is defined but not currently used in the UI
+  // const featureImportanceData = [
+  //   { name: 'Transaction Amount', value: 0.23, description: 'High-value transactions often indicate fraud patterns' },
+  //   { name: 'Time Since Last', value: 0.19, description: 'Unusual timing patterns suggest fraudulent activity' },
+  //   { name: 'Merchant Type', value: 0.15, description: 'Certain merchant categories have higher fraud rates' },
+  //   { name: 'Location Anomaly', value: 0.12, description: 'Transactions from unusual locations flag fraud' },
+  //   { name: 'Velocity Check', value: 0.08, description: 'Rapid successive transactions indicate bot activity' }
+  // ];
 
   const handlePredict = async () => {
     if (!amount || !time) {
