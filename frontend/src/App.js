@@ -108,10 +108,10 @@ function App() {
 
   // KPI Data
   const kpiData = [
-    { title: 'Total Transactions', value: '284,759', change: '+12.5%', icon: '💳' },
-    { title: 'Fraud Rate', value: '2.3%', change: '-0.8%', icon: '⚠️' },
-    { title: 'Model Accuracy', value: '98.7%', change: '+1.2%', icon: '🎯' },
-    { title: 'Avg Transaction', value: '$87.42', change: '+3.2%', icon: '💰' }
+    { title: 'Total Transactions', value: '284,759', change: '+12.5%' },
+    { title: 'Fraud Rate', value: '2.3%', change: '-0.8%' },
+    { title: 'Model Accuracy', value: '98.7%', change: '+1.2%' },
+    { title: 'Avg Transaction', value: '$87.42', change: '+3.2%' }
   ];
 
   // Chart Data
@@ -320,14 +320,14 @@ function App() {
           
           {/* Hero Content */}
           <div style={{ textAlign: 'center', padding: '2rem 0', marginBottom: '3rem' }}>
-            <motion.div
+            <motion.div 
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
               viewport={{ once: true }}
               style={{ fontSize: '3.75rem', marginBottom: '1.5rem', color: 'white' }}
             >
-              🛡️
+              🔍
             </motion.div>
             
             <motion.h1 
@@ -648,7 +648,7 @@ function App() {
                   alignItems: 'center',
                   gap: '0.75rem'
                 }}>
-                  <span style={{ color: '#60a5fa' }}>📊</span>
+                  <span style={{ color: '#60a5fa' }}></span>
                   Transaction Analysis
                 </h2>
                 
@@ -777,7 +777,7 @@ function App() {
                         </>
                       ) : (
                         <>
-                          <span>🔍</span>
+                          <span></span>
                           Detect Fraud
                         </>
                       )}
@@ -823,7 +823,7 @@ function App() {
                         gap: '0.75rem'
                       }}
                     >
-                      <span style={{ color: '#f87171', fontSize: '1.25rem' }}>⚠️</span>
+                      <span style={{ color: '#f87171', fontSize: '1.25rem' }}></span>
                       <span style={{ color: '#fca5a5' }}>{error}</span>
                     </motion.div>
                   )}
@@ -851,7 +851,7 @@ function App() {
                   justifyContent: 'center',
                   gap: '0.75rem'
                 }}>
-                  <span style={{ color: '#34d399' }}>🎯</span>
+                  <span style={{ color: '#34d399' }}></span>
                   Prediction Result
                 </h2>
                 
@@ -897,7 +897,7 @@ function App() {
                         alignItems: 'center',
                         justifyContent: 'center'
                       }}>
-                        <span style={{ fontSize: '1.5rem' }}>🔍</span>
+                        <span style={{ fontSize: '1.5rem' }}></span>
                       </div>
                     </motion.div>
                     <p style={{ color: '#94a3b8', fontSize: '1.125rem' }}>
@@ -986,8 +986,8 @@ function App() {
                       lineHeight: '1.6' 
                     }}>
                       {prediction.prediction === 'Fraud' 
-                        ? '⚠️ This transaction has been flagged as potentially fraudulent. Review recommended.'
-                        : '✅ This transaction appears to be legitimate. No suspicious activity detected.'}
+                        ? 'This transaction has been flagged as potentially fraudulent. Review recommended.'
+                        : 'This transaction appears to be legitimate. No suspicious activity detected.'}
                     </div>
                   </motion.div>
                 )}
@@ -1124,7 +1124,7 @@ function App() {
               alignItems: 'center',
               gap: '1rem'
             }}>
-              <span>📊</span>
+              <span></span>
               Analytics Dashboard
             </h2>
             <p style={{
@@ -1164,9 +1164,6 @@ function App() {
                 }}
               >
                 <div style={{ padding: '1.5rem' }}>
-                  <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>
-                    {kpi.icon}
-                  </div>
                   <div style={{ color: '#f1f5f9', fontSize: '1.5rem', fontWeight: '700', marginBottom: '0.5rem' }}>
                     {kpi.value}
                   </div>
@@ -1194,7 +1191,7 @@ function App() {
             >
               <div style={{ padding: '1.5rem' }}>
                 <h3 style={{ color: '#1E293B', fontSize: '1.25rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span>⚖️</span>
+                  <span></span>
                   Fraud vs Legitimate Distribution
                 </h3>
                 <div style={{ height: '250px' }}>
@@ -1242,7 +1239,7 @@ function App() {
             >
               <div style={{ padding: '1.5rem' }}>
                 <h3 style={{ color: '#1E293B', fontSize: '1.25rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span>📈</span>
+                  <span></span>
                   Transaction Trends
                 </h3>
                 <div style={{ height: '250px' }}>

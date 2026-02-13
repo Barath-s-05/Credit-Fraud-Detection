@@ -19,14 +19,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Load the trained model and scaler
+# Load the trained model and scalers
 model_path = os.path.join("..", "model_training", "model.pkl")
-scaler_path = os.path.join("..", "model_training", "scaler.pkl")
+scaler_amount_path = os.path.join("..", "model_training", "scaler_amount.pkl")
+scaler_time_path = os.path.join("..", "model_training", "scaler_time.pkl")
+feature_names_path = os.path.join("..", "model_training", "feature_names.pkl")
 
 try:
     model = joblib.load(model_path)
-    scaler = joblib.load(scaler_path)
-    print("Model and scaler loaded successfully")
+    scaler_amount = joblib.load(scaler_amount_path)
+    scaler_time = joblib.load(scaler_time_path)
+    feature_names = joblib.load(feature_names_path)
+    print("Model and scalers loaded successfully")
+    print(f"Feature names: {feature_names[:5]}...")  # Show first 5 features
 except FileNotFoundError as e:
     print(f"Error loading model: {e}")
     raise
@@ -146,17 +151,26 @@ def predict(request: PredictionRequest):
         amount = request.amount
         time = request.time
         
-        # Create the feature vector in the correct order: [amount, time, V1-V28]
-        feature_vector = [amount, time]
+        # Scale amount and time separately using their respective scalers
+        scaled_amount = scaler_amount.transform([[amount]])[0][0]
+        scaled_time = scaler_time.transform([[time]])[0][0]
+        
+        # Create the feature vector in the correct order: [V1-V28, scaled_amount, scaled_time]
+        # Initialize with default values (0) for V1-V28 if not provided
+        feature_dict = {'scaled_amount': scaled_amount, 'scaled_time': scaled_time}
+        
+        # Add V1-V28 features (default to 0 if not provided)
         for i in range(1, 29):
-            feature_value = getattr(request, f'V{i}')
-            feature_vector.append(feature_value)
+            feature_name = f'V{i}'
+            feature_value = getattr(request, feature_name, 0.0)
+            feature_dict[feature_name] = feature_value
         
-        # Convert to numpy array and reshape for scaling
+        # Create feature vector in the correct order as used during training
+        feature_vector = [feature_dict[name] for name in feature_names]
+        
+        # Convert to numpy array
         features_array = np.array(feature_vector).reshape(1, -1)
-        
-        # Scale the entire feature vector
-        scaled_features = scaler.transform(features_array)
+        scaled_features = features_array
         
         # Make prediction
         prediction = model.predict(scaled_features)[0]
@@ -165,12 +179,30 @@ def predict(request: PredictionRequest):
         # Get the confidence score (probability of the predicted class)
         confidence = max(prediction_proba) * 100
         
-        # Determine the result
-        result = "Fraud" if prediction == 1 else "Legitimate"
+        # Get individual class probabilities
+        fraud_prob = prediction_proba[1] * 100  # Probability of fraud
+        legit_prob = prediction_proba[0] * 100  # Probability of legitimate
+        
+        # Enhanced fraud detection logic
+        # Flag as fraud if:
+        # 1. Model predicts fraud OR
+        # 2. Fraud probability > 20% OR 
+        # 3. Amount > $50,000 OR
+        # 4. Suspicious time patterns
+        
+        is_fraud = (prediction == 1 or 
+                   fraud_prob > 20 or 
+                   amount > 50000 or 
+                   (amount > 10000 and time < 300) or  # High amount + very fast
+                   (amount > 10000 and time > 72000))  # High amount + very slow
+        
+        result = "Fraud" if is_fraud else "Legitimate"
         
         return {
             "prediction": result,
-            "confidence": round(float(confidence), 2)
+            "confidence": round(float(confidence), 2),
+            "fraud_probability": round(float(fraud_prob), 2),
+            "legitimate_probability": round(float(legit_prob), 2)
         }
         
     except Exception as e:
