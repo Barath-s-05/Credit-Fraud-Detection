@@ -386,7 +386,7 @@ function App() {
         }} />
       </section>
       
-      {/* Cards Section - New Scroll Section */}
+      {/* Cards Section - FIXED ORDER: Predict Section (1st) */}
       <section id="predict-section" className="cards-section" style={{
         background: '#F8FAFC',
         padding: '80px 20px 60px 20px',
@@ -1110,6 +1110,7 @@ function App() {
         />
       </div>
       
+      {/* FIXED ORDER: Analytics Section (2nd) */}
       <section id="analytics-section" className="analytics-section" style={{
         background: '#F8FAFC',
         padding: '60px 20px',
@@ -1315,7 +1316,7 @@ function App() {
         </main>
       </section>
 
-      {/* Insights Section */}
+      {/* FIXED ORDER: Insights Section (3rd) */}
       <section id="insights-section" className="insights-section" style={{
         background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)',
         padding: '80px 20px',
